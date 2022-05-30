@@ -65,13 +65,9 @@ $AllowCreateUpdateRemoveConnectors =$false
 $credential = Get-AutomationPSCredential -Name 'AutomationCreds'  
 $userName = $credential.UserName  
 $securePassword = $credential.Password
-
-$PasswordProfile = New-Object -TypeName Microsoft.Open.AzureAD.Model.PasswordProfile
-$PasswordProfile.Password = $Password
-$PasswordProfile.ForceChangePasswordNextLogin = $true
 $psCredential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $userName, $securePassword
 
-# Connect to Microsoft 365 services
+# Connect to Microsoft services
 Connect-AzureAD -Credential $psCredential
 
 if(($GroupType -eq 'Microsoft365') -or ($GroupType -eq 'Distributionlist'))

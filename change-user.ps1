@@ -40,13 +40,14 @@ Import-Module 'AzureADPreview'
 $credential = Get-AutomationPSCredential -Name 'AutomationCreds'  
 $userName = $credential.UserName  
 $securePassword = $credential.Password
+$psCredential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $userName, $securePassword
 
+# Generate password profile
 $PasswordProfile = New-Object -TypeName Microsoft.Open.AzureAD.Model.PasswordProfile
 $PasswordProfile.Password = $Password
 $PasswordProfile.ForceChangePasswordNextLogin = $true
 
-# Get Office 365 credential from Azure Automation and connect to Azure AD
-$psCredential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $userName, $securePassword
+# Connect to Microsoft services
 Connect-AzureAD -Credential $psCredential
 
 $DisplayName = $FirstName + " " + $LastName

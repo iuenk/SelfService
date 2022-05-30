@@ -46,13 +46,9 @@ $Tenant = Get-AutomationVariable -Name 'Tenant'
 $credential = Get-AutomationPSCredential -Name 'AutomationCreds'  
 $userName = $credential.UserName  
 $securePassword = $credential.Password
-
-$PasswordProfile = New-Object -TypeName Microsoft.Open.AzureAD.Model.PasswordProfile
-$PasswordProfile.Password = $Password
-$PasswordProfile.ForceChangePasswordNextLogin = $true
 $psCredential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $userName, $securePassword
 
-# Connect to Microsoft 365 services
+# Connect to Microsoft services
 Connect-AzureAD -Credential $psCredential
 Connect-ExchangeOnline -Credential $psCredential
 Connect-SPOService -Url "https://$($Tenant)-admin.sharepoint.com" -Credential $psCredential
